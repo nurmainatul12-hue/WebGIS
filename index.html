@@ -1290,12 +1290,34 @@
         setBounds();
 
 
-
         // ======================
         // GLOBAL LAYER
         // ======================
 
         let uploadedLayer = null;
+
+		// ======================
+		// FUNGSI POPUP ATRIBUT
+		// ======================
+
+		function onEachFeaturePopup(feature, layer){
+
+		    let content = "<table border='1' style='border-collapse:collapse;width:100%;'>";
+
+		    for(let key in feature.properties){
+
+  		      content += `
+		        <tr>
+ 		           <td><b>${key}</b></td>
+ 		           <td>${feature.properties[key]}</td>
+ 		       </tr>
+  		      `;
+ 		   }
+
+		    content += "</table>";
+
+		    layer.bindPopup(content);
+		}
 			
 		// ======================
         // TOMBOL UPLOAD
@@ -1342,7 +1364,8 @@
                         style:{
                             color:"#ff0000",
                             weight:3
-                        }
+                        },
+						onEachFeature: onEachFeaturePopup
                     }).addTo(map);
 
                     // Zoom otomatis
@@ -1376,7 +1399,8 @@
                         style:{
                             color:"#00aa00",
                             weight:3
-                        }
+                        },
+						onEachFeature: onEachFeaturePopup
                     }).addTo(map);
 
                     // Zoom otomatis
@@ -1403,7 +1427,8 @@
                             style:{
                                 color:"#0000ff",
                                 weight:3
-                            }
+                            },
+							onEachFeature: onEachFeaturePopup
                         }).addTo(map);
 
                         // Zoom otomatis
